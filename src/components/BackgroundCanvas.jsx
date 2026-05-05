@@ -26,7 +26,7 @@ export default function BackgroundCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
-    const context = canvas.getContext('2d', { alpha: false });
+    const context = canvas.getContext('2d');
     let animationFrameId;
     let lastRenderedIndex = -1;
     let lastValidImg = null;
@@ -99,8 +99,7 @@ export default function BackgroundCanvas() {
           const centerShiftX = (canvas.width - img.width * ratio) / 2;
           const centerShiftY = (canvas.height - img.height * ratio) / 2;
 
-          context.fillStyle = '#050505';
-          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.clearRect(0, 0, canvas.width, canvas.height);
           
           context.drawImage(
             img, 
@@ -121,10 +120,8 @@ export default function BackgroundCanvas() {
   }, [frameIndex]);
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none bg-[#050505]">
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
-      {/* Dark gradient overlay to ensure text on the website is readable */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/80 via-transparent to-[#030712]/90 mix-blend-multiply" />
     </div>
   );
 }
